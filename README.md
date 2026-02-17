@@ -7,7 +7,16 @@
 ### Information: To perform an unbiased EDA (Exploratory Data Analysis), I designed a synthetic dataset using Python (Faker module). The data structure was specifically modeled to reflect real-world business scenarios of a SaaS company. Naturally, the outcome of the analysis had to be incorporated into the generated data so that the scenario could be mapped as desired.
 
 ### Inspecting Data with Python
-*Note: At this point, we have not yet addressed data manipulation in Python in the course. Therefore, only a brief induction is carried out here.*
+*Note: At this point, we have not yet addressed data manipulation in Python in the course. Therefore, only a brief induction is carried out here. I'll update the README as I go and post a summarized and appealing version of it at the end.*
+
+### Project Progress & To-Do List:
+- [x] Create synthetic dataset (Python Faker)
+- [x] Initial data inspection (Pandas)
+- [x] Set up PostgreSQL database & DBeaver environment
+- [ ] Import CSV data into SQL tables
+- [ ] Perform relational analysis (JOINs) to link User IDs and Tickets
+- [ ] Analyze support ticket trends (Pre- vs. Post-Download)
+- [ ] Final summary of results and business impact
 
 # Loading the data
 import pandas as pd
