@@ -22,7 +22,7 @@ zendesk_tickets_export = pd.read_csv("zendesk_tickets_export.csv")
 print(deployment_history)
 print(raw_crm_customer_data)
 Is the User Id listed anywhere else? Are there connections?
-###The view in print is very cluttered
+### The view in print is very cluttered
 
 show_row_raw_customer = raw_crm_customer_data.iloc[0].to_frame()
 print(show_row_raw_customer)
@@ -30,7 +30,7 @@ print(show_row_raw_customer)
 # Here I can see which channels the users come through and which OS is used. 
  print(sys_backend_error_logs.to_string)
  
- ### This all looks wrong somehow, maybe I'd better use something other than pure print?
+### This all looks wrong somehow, maybe I'd better use something other than pure print?
 show_row_sys_error = sys_backend_error_logs.iloc[0].to_frame()
 print(show_row_sys_error)
 
