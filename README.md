@@ -10,7 +10,7 @@ Determine whether the introduction of the PDF download actually led to a reducti
 
 ## Dataset
 
-To ensure an unbiased Exploratory Data Analysis, I created a synthetic dataset using Python's Faker module. The data structure was specifically designed to reflect real-world business scenarios of a SaaS company, including realistic relationships between users, sessions, tickets, and error logs.
+To ensure an unbiased Exploratory Data Analysis, I created a synthetic dataset using Python's Faker module with AI support. The data structure was specifically designed to reflect real-world business scenarios of a SaaS company, including realistic relationships between users, sessions, tickets, and error logs.
 
 The dataset consists of five tables:
 
