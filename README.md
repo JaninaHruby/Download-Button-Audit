@@ -26,11 +26,11 @@ The dataset consists of five tables:
 
 ### Part 1: Exploratory Data Analysis (Python)
 
-Initial data inspection using Pandas to understand the structure of each table, identify relationships between them (e.g. linking `session_id` and `user_id` across tables), and formulate key questions for the SQL analysis.
+Initial data inspection using Pandas to understand the structure of each table. Looking at the backend error logs, one entry immediately stood out: a `500 Internal Server Error` on `/api/pdf/download` — the very endpoint introduced in v1.2. This raised the question of whether these errors were isolated incidents or a systemic pattern. The web tracking table provided the missing link: it connects `session_id` to `user_id`, making it possible to trace errors back to specific users and their device configurations. This prompted the move to SQL for structured cross-table analysis.
 
 ### Part 2: SQL Analysis (Databricks)
 
-Structured queries to answer the core business questions, comparing metrics before and after the deployment of Release v1.2.
+Starting with the most obvious question — did ticket volume actually drop after the release? The answer was no. That result alone justified looking further: if the feature did not reduce overall tickets, did it at least affect the right category? Filtering for product inquiries specifically showed a 14% decrease, which confirmed the PDF content was reaching users as intended. But the simultaneous rise in bug reports pointed to a technical problem introduced by the release itself. Narrowing down to the backend error logs confirmed that all errors originated from a single endpoint. The final step — a JOIN across CRM, tracking, and error data — revealed that no specific browser, device, or OS combination was responsible, ruling out a client-side issue and pointing directly to a backend root cause.
 
 ## Key Findings
 
@@ -46,6 +46,12 @@ Structured queries to answer the core business questions, comparing metrics befo
 - All 6,674 backend errors are `Internal Server Error` on a single endpoint: `/api/pdf/download`.
 - **Note on data quality:** The fact that PDF download errors appear *before* the download button was even released is a limitation of the synthetic data generated with Faker. In a real-world scenario, these errors could only occur after the feature was deployed. This is an important reminder that synthetic datasets require careful validation against the business logic they are meant to represent.
 
+## Recommendation
+
+The `/api/pdf/download` endpoint requires immediate investigation. The error distribution across all browser, device, and OS combinations rules out a client-side compatibility issue — no specific configuration is responsible, which points directly to the server-side implementation. Likely candidates are file generation under load, missing timeout handling, or insufficient error recovery logic.
+
+The 14% drop in product inquiries shows the PDF content itself is working as intended. The feature has merit — but it cannot deliver its full potential while the backend is unstable. A targeted hotfix, scoped specifically to the download endpoint, should be prioritized before the next release cycle.
+
 ## Project Status
 
 - [x] Create synthetic dataset (Python / Faker)
@@ -53,12 +59,9 @@ Structured queries to answer the core business questions, comparing metrics befo
 - [x] Set up database environment (PostgreSQL / DBeaver / Databricks)
 - [x] Import CSV data into SQL tables
 - [x] Analyze support ticket trends (pre- vs. post-release)
-- [x] Analyze backend error trends
-- [x] Identify affected endpoints
-- [ ] Investigate error correlation with browser/OS
-- [ ] Narrow down exact timing of error occurrences
-- [ ] Perform relational analysis (JOINs) to link users and tickets
-- [ ] Final summary and business impact report
+- [x] Analyze backend error trends (total errors, error categories, affected endpoints)
+- [x] Investigate error distribution by browser, device, and OS (JOIN analysis)
+- [x] Final summary and business impact report
 
 ## Tools Used
 
